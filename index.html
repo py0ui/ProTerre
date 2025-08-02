@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proterre - Excavation minière</title>
+  <style>
+    :root {
+      --violet: #2B0954;
+      --jaune: #F6B930;
+      --violet-clair: #3E0B75;
+      --jaune-pale: #FFF6D0;
+      --violet-pale: #EEE6FA;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #fff;
+      color: var(--violet);
+    }
+
+    nav {
+      background-color: var(--violet);
+      color: var(--jaune);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      height: 40px;
+    }
+
+    .nav-links a {
+      color: var(--jaune);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: bold;
+      transition: opacity 0.3s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.7;
+    }
+
+    header {
+      position: relative;
+      height: 100vh;
+      background-image: url('https://hexagon.com/-/media/project/one-web/master-site/altudo/l1140-specific-capability/wide-view-of-open-pit-mine.jpg?iar=0&hash=C285FAAF179E1E5629B81C87BA9663F5');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: transparent;
+    }
+
+    .header-content {
+      position: relative;
+      text-align: center;
+      color: var(--jaune);
+      z-index: 1;
+    }
+
+    .header-content img {
+      height: 100px;
+      margin-bottom: 1rem;
+    }
+
+    .header-content h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-content p {
+      font-size: 1.2rem;
+      color: var(--jaune-pale);
+    }
+
+    main {
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    section {
+      margin: 0;
+      padding: 4rem 1rem;
+      border-radius: 0;
+      width: 100vw;
+    }
+
+    section:nth-of-type(even) {
+      background-color: var(--jaune-pale);
+    }
+
+    section:nth-of-type(odd) {
+      background-color: var(--violet-pale);
+    }
+
+    .stock-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .mineral {
+      flex: 1 1 200px;
+      padding: 1rem;
+      border: 2px solid var(--violet);
+      border-radius: 10px;
+    }
+
+    .mineral img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .mineral h3 {
+      margin: 1rem 0 0.5rem;
+      color: var(--violet);
+    }
+
+    .mineral p {
+      font-size: 1rem;
+      color: var(--violet-clair);
+    }
+
+    .order-button {
+      margin-top: 2rem;
+      background-color: var(--jaune);
+      color: var(--violet);
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .order-button:hover {
+      background-color: var(--jaune-pale);
+    }
+
+    .annonces-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .annonce {
+      background-color: #fff;
+      border: 2px solid var(--violet);
+      border-radius: 10px;
+      width: 280px;
+      overflow: hidden;
+      transition: transform 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .annonce:hover {
+      transform: scale(0.98);
+    }
+
+    .annonce img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .annonce-content {
+      padding: 1rem;
+    }
+
+    .annonce-content h4 {
+      color: var(--violet);
+      margin-bottom: 0.5rem;
+    }
+
+    .annonce-content p {
+      font-size: 0.9rem;
+      color: var(--violet-clair);
+    }
+
+    .annonce .btn {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background-color: var(--violet);
+      color: var(--jaune);
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      border: none;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .annonce:hover .btn {
+      opacity: 1;
+    }
+
+    section h2 {
+      display: inline-block;
+      background-color: white;
+      color: var(--violet);
+      border: 2px solid white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .tarif-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .tarif-item {
+      flex: 1 1 200px;
+      padding: 1rem;
+      background-color: white;
+      border: 2px solid var(--violet);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .tarif-item h4 {
+      margin-bottom: 0.5rem;
+      color: var(--violet);
+    }
+
+    .tarif-item p {
+      color: var(--violet-clair);
+    }
+	
+  </style>
+</head>
+<body>
+  <nav>
+    <img src="https://media.discordapp.net/attachments/1400273613189550183/1401187995054510100/ChatGPT_Image_1_aout_2025_18_00_26.png?ex=688f5d82&is=688e0c02&hm=b4d252ed940bb41d84d86c2630748478f341cf6dfc744edaf4117798bce89ac1&=&format=webp&quality=lossless&width=770&height=770" alt="Logo Proterre" class="nav-logo">
+    <div class="nav-links">
+      <a href="#accueil">Accueil</a>
+      <a href="#stock">Stock</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#annonces">Annonces</a>
+      <a href="#recrutement">Recrutement</a>
+      <a href="#partenaires">Partenaires</a>
+    </div>
+  </nav>
+
+  <header id="accueil">
+    <div class="header-content">
+	
+      <h1>Proterre</h1>
+      <p>Excavation locale • Minage à l’ancienne • Magnétite, cuivre, pierre</p>
+    </div>
+  </header>
+  <!-- SECTION stock -->
+<section id="stock" style="background-color: #fffde7; padding: 4rem 0;">
+  <div style="text-align: center; margin-bottom: 2rem;">
+    <h2 style="margin-top: 2rem;">Stock</h2>
+  </div>
+  <div class="stock-container" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+    <div class="mineral" style="text-align: center;">
+      <img src="https://media.discordapp.net/attachments/1400273613189550183/1401003046716309514/Capture_decran_2025-08-02_021605.png?ex=688f5a03&is=688e0883&hm=f48d504ee89158930886038a61120265bdc013586754cf4936ae9ab9b01ec65f&=&format=webp&quality=lossless&width=728&height=614" alt="Magnétite" style="max-width: 200px; height: auto;">
+      <h3>Magnétite</h3>
+      <p>Quantité disponible : à définir</p>
+    </div>
+    <div class="mineral" style="text-align: center;">
+      <img src="https://media.discordapp.net/attachments/1400273613189550183/1401003046070124584/Capture_decran_2025-08-02_021312-Pica.png?ex=688f5a03&is=688e0883&hm=b12f4f66dc65f4f1d7212a2c49b2ac761fb10546a029285298235574f494ed80&=&format=webp&quality=lossless&width=675&height=614" alt="Cuivre" style="max-width: 200px; height: auto;">
+      <h3>Cuivre</h3>
+      <p>Quantité disponible : à définir</p>
+    </div>
+    <div class="mineral" style="text-align: center;">
+      <img src="https://media.discordapp.net/attachments/1400273613189550183/1401003046401478716/Capture_decran_2025-08-02_021319.png?ex=688f5a03&is=688e0883&hm=3d9c668205e40c746dda52c9d9101fb0b2ec18cad89a5a5323c42b4cc6579d45&=&format=webp&quality=lossless&width=717&height=614" alt="Pierre" style="max-width: 200px; height: auto;">
+      <h3>Pierre</h3>
+      <p>Quantité disponible : à définir</p>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 3rem;">
+    <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400683350246686770'">Commander</button>
+  </div>
+</section>
+
+<!-- SECTION TARIFS -->
+<section id="tarifs" style="background-color: #f3e5f5; padding: 4rem 0;">
+  <div style="text-align: center; margin-bottom: 2rem;">
+    <h2>Nos tarifs</h2>
+  </div>
+  <div class="tarif-container" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+    <div class="tarif-item" style="background: white; padding: 1rem; border-radius: 8px; text-align: center; max-width: 200px;">
+      <img src="https://media.discordapp.net/attachments/1400273613189550183/1401003046716309514/Capture_decran_2025-08-02_021605.png?ex=688f5a03&is=688e0883&hm=f48d504ee89158930886038a61120265bdc013586754cf4936ae9ab9b01ec65f&=&format=webp&quality=lossless&width=728&height=614" alt="Magnétite" style="max-width: 100%; height: auto;">
+      <h4>Magnétite</h4>
+      <p>Prix à définir</p>
+    </div>
+    <div class="tarif-item" style="background: white; padding: 1rem; border-radius: 8px; text-align: center; max-width: 200px;">
+      <img src="https://media.discordapp.net/attachments/1400273613189550183/1401003046070124584/Capture_decran_2025-08-02_021312-Pica.png?ex=688f5a03&is=688e0883&hm=b12f4f66dc65f4f1d7212a2c49b2ac761fb10546a029285298235574f494ed80&=&format=webp&quality=lossless&width=675&height=614" alt="Cuivre" style="max-width: 100%; height: auto;">
+      <h4>Cuivre</h4>
+      <p>Prix à définir</p>
+    </div>
+    <div class="tarif-item" style="background: white; padding: 1rem; border-radius: 8px; text-align: center; max-width: 200px;">
+      <img src="https://media.discordapp.net/attachments/1400273613189550183/1401003046401478716/Capture_decran_2025-08-02_021319.png?ex=688f5a03&is=688e0883&hm=3d9c668205e40c746dda52c9d9101fb0b2ec18cad89a5a5323c42b4cc6579d45&=&format=webp&quality=lossless&width=717&height=614" alt="Pierre" style="max-width: 100%; height: auto;">
+      <h4>Pierre</h4>
+      <p>Prix à définir</p>
+    </div>
+    <div class="tarif-item" style="background: white; padding: 1rem; border-radius: 8px; text-align: center; max-width: 200px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Livraison" style="max-width: 100%; height: auto;">
+      <h4>Livraison</h4>
+      <p>Tarif selon la distance</p>
+    </div>
+  </div>
+</section>
+
+
+  <!-- SECTION ANNONCES -->
+  <section id="annonces">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h2 style="background-color: white; border: 2px solid white; color: var(--violet); padding: 0.5rem 1rem; border-radius: 8px;">
+        Nos dernières annonces
+      </h2>
+    </div>
+    <div class="annonces-container">
+      <div class="annonce" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400680302308757554/1400872556956745881'">
+        <img src="https://www.usinenouvelle.com/mediatheque/5/9/6/000759695_image_896x598/recrutement.jpg" alt="Annonce 1">
+        <div class="annonce-content">
+          <h4>recrutement chez ProTerre</h4>
+          <p>nous avons de la place dans l équipe de direction de ProTerre mais aussi en tan que mineur dans la mine</p>
+          <button class="btn">Voir</button>
+        </div>
+      </div>
+      <div class="annonce" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400680245283131474/1400873022973280257'">
+        <img src="https://media.discordapp.net/attachments/1400680245283131474/1400873022663164077/ChatGPT_Image_1_aout_2025_18_00_26.png?ex=688ee0eb&is=688d8f6b&hm=31b2ac87a13139c3b2e67fc1e87de58b1528f5d06106d7388b5e03aae9d7a18c&=&format=webp&quality=lossless&width=770&height=770" alt="Annonce 2">
+        <div class="annonce-content">
+          <h4>NOUVEAU LOGO</h4>
+          <p>NOTE SUR .../10</p>
+          <button class="btn">Voir</button>
+        </div>
+      </div>
+      <div class="annonce" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400681239253618911'">
+        <img src="https://yago-talents-entrepreneurs.com/wp-content/uploads/2019/04/Partenaires.png" alt="Annonce 3">
+        <div class="annonce-content">
+          <h4>devenir partenaire</h4>
+          <p>apprêt avoir fait 1 commende vous pouvez devenir grâce a se statu vous pourrai bénéfice d une priorité dans les commande</p>
+          <button class="btn">Voir</button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 3rem;">
+      <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400680245283131474'">Voir toutes les annonces</button>
+    </div>
+  </section>
+  <!-- SECTION recutement -->
+  <section id="recrutement">
+    <div style="text-align: center; margin-bottom: 2rem;">
+  <h2>Nous recrutons</h2>
+    </div>
+    <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: var(--violet-clair);">
+      Nous recherchons des personnes motivées, sérieuses et respectueuses de la nature pour rejoindre notre équipe.
+      Le travail est local, propre et réalisé à l’ancienne. Rejoignez une entreprise fiable et proche de ses employés.
+    </p>
+    <div style="text-align: center; margin-top: 2rem;">
+      <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400683350246686770'">Postuler</button>
+    </div>
+  </section>
+  <!-- SECTION Partenaire -->
+<section id="partenaires">
+  <div style="text-align: center;">
+    <h2>Nos partenaires</h2>
+  </div>
+  <div class="annonces-container">
+    <div class="annonce">
+      <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-32590363.jpg" alt="Partenaire 1">
+      <div class="annonce-content">
+        <h4>???</h4>
+        <p>......</p>
+      </div>
+    </div>
+    <div class="annonce">
+      <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-32590363.jpg" alt="Partenaire 2">
+      <div class="annonce-content">
+        <h4>???</h4>
+        <p>......</p>
+      </div>
+    </div>
+    <div class="annonce">
+      <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-32590363.jpg" alt="Partenaire 3">
+      <div class="annonce-content">
+        <h4>???</h4>
+        <p>......</p>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 2rem; text-align: center;">
+    <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400681239253618911'">Voir tous les partenaires</button>
+  </div>
+</section>
+
+</body>
+</html>
