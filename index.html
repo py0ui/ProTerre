@@ -371,14 +371,14 @@
           <div class="tarif-item" role="listitem" tabindex="0"
                data-name="Magnétite"
                data-price="12"
-               data-stock="5140"
+               data-stock="400"
                data-img="https://i.ibb.co/mjQvwCF/Capture-decran-2025-08-02-021605.png">
             <img src="https://i.ibb.co/mjQvwCF/Capture-decran-2025-08-02-021605.png" alt="Magnétite">
             <h4>Magnétite</h4>
             <p class="price">12€</p>
 
             <div class="hover-overlay" aria-hidden="true">
-              <div class="stock-line">Stock : 5140</div>
+              <div class="stock-line">Stock : 400</div>
               <button class="voir-btn" type="button">Voir</button>
             </div>
           </div>
@@ -401,14 +401,14 @@
           <div class="tarif-item" role="listitem" tabindex="0"
                data-name="Pierre"
                data-price="24"
-               data-stock="5107"
+               data-stock="520"
                data-img="https://i.ibb.co/Nn2m5nWx/Capture-decran-2025-08-02-021319-1.png">
             <img src="https://i.ibb.co/Nn2m5nWx/Capture-decran-2025-08-02-021319-1.png" alt="Pierre">
             <h4>Pierre</h4>
             <p class="price">24€</p>
 
             <div class="hover-overlay" aria-hidden="true">
-              <div class="stock-line">Stock : 5107</div>
+              <div class="stock-line">Stock : 520</div>
               <button class="voir-btn" type="button">Voir</button>
             </div>
           </div>
@@ -689,9 +689,9 @@
         if(!showing) showPopup();
       }, 120000);
 
-      // 3) Après fermeture manuelle, réapparition un peu plus tôt (40s) pour insister
+      // 3) Après fermeture manuelle, réapparition un peu plus tôt (1min) pour insister
       popupCloseBtn.addEventListener('click', ()=>{
-        setTimeout(()=>{ if(!showing) showPopup(); }, 40000);
+        setTimeout(()=>{ if(!showing) showPopup(); }, 100000);
       });
 
       // Nettoyage si jamais le noeud disparaît (robustesse)
