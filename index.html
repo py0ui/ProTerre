@@ -12,6 +12,7 @@
       --jaune-pale: #FFF6D0;
       --violet-pale: #EEE6FA;
       --nav-height: 64px;
+      --shadow: 0 10px 25px rgba(43,9,84,.15);
     }
 
     /* Reset / Base */
@@ -79,8 +80,6 @@
       height:3px;background:var(--jaune);border-radius:3px;display:block;
       transition:transform .2s, opacity .2s;
     }
-    /* when active */
-    .nav-links.mobile-hidden{display:none}
 
     /* HEADER */
     header{
@@ -119,57 +118,72 @@
       border:2px solid #fff;
       margin-bottom:1.5rem;
       font-size:1.25rem;
+      box-shadow: var(--shadow);
     }
 
-    /* STOCK */
-    .stock-container{
-      display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;
-    }
-    .mineral{
-      flex:1 1 200px;
-      max-width:260px;
-      background:#fff;
-      border:2px solid var(--violet);
-      border-radius:10px;
-      padding:1rem;text-align:center;
-    }
-    .mineral img{height:150px;object-fit:contain;border-radius:8px;margin:0 auto}
-    .mineral h3{margin-top:.75rem;color:var(--violet)}
-    .mineral p{color:var(--violet-clair)}
-
-    .order-button{
-      margin-top:2rem;background:var(--jaune);color:var(--violet);
-      padding:.75rem 1.25rem;border-radius:6px;border:none;font-weight:700;cursor:pointer;
-    }
-    .order-button:hover{background:var(--jaune-pale)}
-
-    /* TARIFS */
+    /* TARIFS (fusion avec stock au survol) */
     .tarif-container{
       display:flex;
-      flex-wrap:wrap;   /* important: allow wrapping */
+      flex-wrap:wrap;
       gap:1rem;
       justify-content:center;
       align-items:start;
     }
     .tarif-item{
+      position:relative;
       background:#fff;
       border:2px solid var(--violet);
-      border-radius:10px;
-      padding:1rem;
+      border-radius:14px;
+      padding:1rem 1rem 1.25rem;
       text-align:center;
-      flex:1 1 180px; /* flexible: base 180px */
-      max-width:220px;
-      min-width:150px;
+      flex:1 1 200px;
+      max-width:240px;
+      min-width:180px;
+      transition: transform .18s, box-shadow .18s, border-color .18s;
+      overflow:hidden;
+      will-change:transform;
     }
-    .tarif-item img{max-height:110px;object-fit:contain;margin:0 auto;border-radius:6px}
-    .tarif-item h4{color:var(--violet);margin:.5rem 0}
-    .tarif-item p{color:var(--violet-clair);font-weight:700}
+    .tarif-item img{
+      max-height:130px;
+      object-fit:contain;
+      margin:0 auto .5rem;
+      border-radius:8px;
+      transition: transform .18s;
+    }
+    .tarif-item h4{color:var(--violet);margin:.35rem 0 .15rem}
+    .tarif-item p.price{color:var(--violet-clair);font-weight:800}
+    .tarif-item .hover-overlay{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      background:rgba(43,9,84,.85);
+      color:#fff;
+      opacity:0;pointer-events:none;
+      transition:opacity .18s;
+      padding:1rem;gap:.5rem;
+    }
+    .tarif-item .stock-line{font-weight:800}
+    .tarif-item .voir-btn{
+      background:var(--jaune);color:var(--violet);
+      padding:.5rem .9rem;border-radius:8px;border:none;font-weight:800;cursor:pointer;
+      box-shadow: var(--shadow);
+    }
+    .tarif-item:hover{transform:scale(1.04); box-shadow:var(--shadow); border-color:#432179;}
+    .tarif-item:hover img{transform:scale(1.05)}
+    .tarif-item:hover .hover-overlay{opacity:1;pointer-events:auto}
+
+    .order-button{
+      margin-top:2rem;background:var(--jaune);color:var(--violet);
+      padding:.75rem 1.25rem;border-radius:10px;border:none;font-weight:800;cursor:pointer;
+      box-shadow: var(--shadow);
+    }
+    .order-button:hover{background:#ffd777}
 
     .livraison{
       display:flex;justify-content:center;margin-top:1.5rem;
     }
     .livraison .box{
-      border:2px solid #000;background:#fff;padding:1rem;border-radius:8px;max-width:520px;text-align:center;
+      border:2px solid #000;background:#fff;padding:1rem;border-radius:12px;max-width:520px;text-align:center;
+      box-shadow: var(--shadow);
     }
     .livraison img{max-width:50px}
 
@@ -178,32 +192,73 @@
       display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;
     }
     .annonce{
-      width:280px;background:#fff;border:2px solid var(--violet);border-radius:10px;overflow:hidden;position:relative;cursor:pointer;
+      width:300px;background:#fff;border:2px solid var(--violet);border-radius:14px;overflow:hidden;position:relative;cursor:pointer;
       transition:transform .18s;
+      box-shadow: var(--shadow);
     }
     .annonce:hover{transform:translateY(-4px)}
     .annonce img{width:100%;height:160px;object-fit:cover}
     .annonce-content{padding:1rem}
     .annonce-content h4{color:var(--violet);margin-bottom:.4rem}
-    .annonce-content p{color:var(--violet-clair);font-size:.95rem}
-    .annonce .btn{position:absolute;bottom:1rem;right:1rem;background:var(--violet);color:var(--jaune);padding:.3rem .7rem;border-radius:6px;border:none;opacity:0;transition:opacity .18s}
+    .annonce-content p{color:var(--violet-clair);font-size:.95rem;min-height:56px}
+    .annonce .btn{position:absolute;bottom:1rem;right:1rem;background:var(--violet);color:var(--jaune);padding:.4rem .8rem;border-radius:8px;border:none;opacity:0;transition:opacity .18s}
     .annonce:hover .btn{opacity:1}
 
-    /* RECRUTEMENT / PARTENAIRES */
-    .text-center{max-width:900px;margin:0 auto;color:var(--violet-clair);font-size:1.05rem}
-    .part-list{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;margin-top:1rem}
-    .part-item{width:280px;background:#fff;border:2px solid var(--violet);border-radius:10px;overflow:hidden;text-align:center;padding:1rem}
+    /* MODALE FICHE MINERAI */
+    .modal-backdrop{
+      position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:1400;
+      padding:1rem;
+    }
+    .modal{
+      width:100%;max-width:860px;background:#fff;border-radius:16px;overflow:hidden;border:2px solid var(--violet);box-shadow: var(--shadow);
+      display:grid;grid-template-columns: 1.1fr 1fr;gap:0;
+    }
+    .modal-img{
+      background:#faf7ff;display:flex;align-items:center;justify-content:center;padding:1rem;border-right:2px solid var(--violet);
+    }
+    .modal-img img{max-height:340px;object-fit:contain;border-radius:10px}
+    .modal-body{padding:1.25rem}
+    .modal-body h3{margin-bottom:.35rem}
+    .modal-body .meta{color:var(--violet-clair);margin-bottom:.75rem;font-weight:700}
+    .modal-body .reserve{
+      background:var(--violet-pale);border-left:4px solid var(--violet);padding:.75rem;border-radius:10px;margin:.75rem 0;
+    }
+    .modal-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+    .close-x{
+      position:absolute;top:10px;right:12px;background:#fff;border:2px solid var(--violet);border-radius:10px;padding:.25rem .55rem;cursor:pointer;font-weight:900;color:var(--violet);
+      box-shadow: var(--shadow);
+    }
+
+    /* POP-UP PUB PARTENAIRES */
+    .popup{
+      position:fixed;bottom:20px;right:20px;z-index:1500;display:none;
+      background:#fff;border:2px solid var(--violet);border-radius:16px;box-shadow: var(--shadow);
+      width:min(360px, 92vw); overflow:hidden;
+      animation: popIn .28s ease-out;
+    }
+    @keyframes popIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .popup header{
+      margin:0;height:auto;background:linear-gradient(90deg,var(--violet),var(--violet-clair));
+      color:#fff;display:flex;align-items:center;gap:.5rem;justify-content:space-between;padding:.6rem .75rem;
+    }
+    .popup header h5{font-size:1rem}
+    .popup .popup-close{
+      background:rgba(255,255,255,.9);color:var(--violet);border:none;border-radius:8px;padding:.2rem .45rem;cursor:pointer;font-weight:900
+    }
+    .popup .popup-body{display:flex;gap:.75rem;align-items:center;padding:.8rem}
+    .popup .popup-body img{width:72px;height:72px;object-fit:cover;border-radius:12px;border:2px solid var(--violet-pale)}
+    .popup .popup-body p{font-size:.95rem;color:var(--violet-clair)}
+    .popup .popup-actions{padding:.8rem;padding-top:0}
+    .popup .popup-actions .order-button{margin:0;width:100%}
 
     /* FOOTER */
     footer{padding:1.25rem;background:#fff;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:var(--violet)}
 
-    /* Utilities */
-    .center{display:flex;justify-content:center;align-items:center}
-
     /* ---------------- Responsive ---------------- */
     @media (max-width:1024px){
-      .mineral img{height:140px}
       .annonce img{height:150px}
+      .modal{grid-template-columns:1fr}
+      .modal-img{border-right:none;border-bottom:2px solid var(--violet)}
     }
 
     @media (max-width:768px){
@@ -215,13 +270,10 @@
       .nav-links a{padding:.6rem .75rem;border-radius:6px}
       .nav-links.show{display:flex}
 
-      /* Stack sections in single column for mobile */
-      .stock-container,.tarif-container,.annonces-container,.part-list{flex-direction:column;align-items:center}
-      .mineral,.tarif-item,.annonce,.part-item{width:92%;max-width:520px}
-      .tarif-item{flex:0 0 auto} /* keep consistent sizing on mobile */
+      .tarif-container,.annonces-container{flex-direction:column;align-items:center}
+      .tarif-item,.annonce{width:92%;max-width:520px}
     }
 
-    /* Very small screens */
     @media (max-width:420px){
       .header-content h1{font-size:1.6rem}
       .header-content p{font-size:1rem}
@@ -239,11 +291,9 @@
 
     <div class="nav-links" id="nav-links">
       <a href="#accueil">Accueil</a>
-      <a href="#stock">Stock</a>
       <a href="#tarifs">Tarifs</a>
       <a href="#annonces">Annonces</a>
       <a href="#recrutement">Recrutement</a>
-      <a href="#partenaires">Partenaires</a>
     </div>
 
     <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
@@ -262,94 +312,100 @@
   </header>
 
   <main>
-    <!-- STOCK -->
-    <section id="stock">
+    <!-- TARIFS (avec stock au survol + fiche) -->
+    <section id="tarifs">
       <div class="wrap center" style="flex-direction:column;">
-        <h2>Stock</h2>
+        <h2>Nos minerais & tarifs</h2>
         <div style="height:1rem;"></div>
 
-        <div class="stock-container" aria-live="polite">
-          <div class="mineral">
-            <img src="https://i.ibb.co/wZdrtmbh/Capture-decran-2025-08-03-030419-1.png" alt="Magnétite">
-            <h3>Diamant</h3>
-            <p>Quantité disponible : 700</p>
+        <div class="tarif-container" role="list" id="minerals-grid">
+          <!-- Chaque item porte ses données en data-* -->
+          <div class="tarif-item" role="listitem" tabindex="0"
+               data-name="Magnétite"
+               data-price="12"
+               data-stock="5140"
+               data-img="https://i.ibb.co/mjQvwCF/Capture-decran-2025-08-02-021605.png">
+            <img src="https://i.ibb.co/mjQvwCF/Capture-decran-2025-08-02-021605.png" alt="Magnétite">
+            <h4>Magnétite</h4>
+            <p class="price">12€</p>
+
+            <div class="hover-overlay" aria-hidden="true">
+              <div class="stock-line">Stock : 5140</div>
+              <button class="voir-btn" type="button">Voir</button>
+            </div>
           </div>
 
-          <div class="mineral">
-            <img src="https://i.ibb.co/d4QKdd83/Capture-decran-2025-08-03-030813-1.png" alt="Cuivre">
-            <h3>Or</h3>
-            <p>Quantité disponible : 0</p>
+          <div class="tarif-item" role="listitem" tabindex="0"
+               data-name="Cuivre"
+               data-price="24"
+               data-stock="797"
+               data-img="https://i.ibb.co/Z6vS1VYF/Capture-decran-2025-08-02-021312-Pica-1.png">
+            <img src="https://i.ibb.co/Z6vS1VYF/Capture-decran-2025-08-02-021312-Pica-1.png" alt="Cuivre">
+            <h4>Cuivre</h4>
+            <p class="price">24€</p>
+
+            <div class="hover-overlay" aria-hidden="true">
+              <div class="stock-line">Stock : 797</div>
+              <button class="voir-btn" type="button">Voir</button>
+            </div>
           </div>
 
-          <div class="mineral">
-            <img src="https://i.ibb.co/Z6vS1VYF/Capture-decran-2025-08-02-021312-Pica-1.png" alt="Pierre">
-            <h3>Cuivre</h3>
-            <p>Quantité disponible : 797</p>
+          <div class="tarif-item" role="listitem" tabindex="0"
+               data-name="Pierre"
+               data-price="24"
+               data-stock="5107"
+               data-img="https://i.ibb.co/Nn2m5nWx/Capture-decran-2025-08-02-021319-1.png">
+            <img src="https://i.ibb.co/Nn2m5nWx/Capture-decran-2025-08-02-021319-1.png" alt="Pierre">
+            <h4>Pierre</h4>
+            <p class="price">24€</p>
+
+            <div class="hover-overlay" aria-hidden="true">
+              <div class="stock-line">Stock : 5107</div>
+              <button class="voir-btn" type="button">Voir</button>
+            </div>
           </div>
 
-          <div class="mineral">
-            <img src="https://i.ibb.co/Nn2m5nWx/Capture-decran-2025-08-02-021319-1.png" alt="Or">
-            <h3>Pierre</h3>
-            <p>Quantité disponible : 5107</p>
+          <div class="tarif-item" role="listitem" tabindex="0"
+               data-name="Or"
+               data-price="6"
+               data-stock="0"
+               data-img="https://i.ibb.co/d4QKdd83/Capture-decran-2025-08-03-030813-1.png">
+            <img src="https://i.ibb.co/d4QKdd83/Capture-decran-2025-08-03-030813-1.png" alt="Or">
+            <h4>Or</h4>
+            <p class="price">6€</p>
+
+            <div class="hover-overlay" aria-hidden="true">
+              <div class="stock-line">Stock : 0</div>
+              <button class="voir-btn" type="button">Voir</button>
+            </div>
           </div>
 
-          <div class="mineral">
-            <img src="https://i.ibb.co/mjQvwCF/Capture-decran-2025-08-02-021605.png" alt="Diamant">
-            <h3>Magnétite</h3>
-            <p>Quantité disponible : 5140</p>
+          <div class="tarif-item" role="listitem" tabindex="0"
+               data-name="Diamant"
+               data-price="150"
+               data-stock="700"
+               data-img="https://i.ibb.co/wZdrtmbh/Capture-decran-2025-08-03-030419-1.png">
+            <img src="https://i.ibb.co/wZdrtmbh/Capture-decran-2025-08-03-030419-1.png" alt="Diamant">
+            <h4>Diamant</h4>
+            <p class="price">150€</p>
+
+            <div class="hover-overlay" aria-hidden="true">
+              <div class="stock-line">Stock : 700</div>
+              <button class="voir-btn" type="button">Voir</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="livraison" aria-live="polite">
+          <div class="box">
+            <img src="https://cdn-icons-png.flaticon.com/512/4554/4554842.png" alt="Livraison">
+            <h4 style="margin-top:.5rem;margin-bottom:.25rem">Livraison</h4>
+            <p style="margin:0">Tarif selon la distance : entre 500€ et 1000€</p>
           </div>
         </div>
 
         <div style="margin-top:2rem">
           <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400683350246686770'">Commander</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TARIFS -->
-    <section id="tarifs">
-      <div class="wrap center" style="flex-direction:column;">
-        <h2>Nos tarifs</h2>
-        <div style="height:1rem;"></div>
-
-        <div class="tarif-container" role="list">
-          <div class="tarif-item" role="listitem">
-            <img src="https://i.ibb.co/mjQvwCF/Capture-decran-2025-08-02-021605.png" alt="Magnétite">
-            <h4>Magnétite</h4>
-            <p>12€</p>
-          </div>
-
-          <div class="tarif-item" role="listitem">
-            <img src="https://i.ibb.co/Z6vS1VYF/Capture-decran-2025-08-02-021312-Pica-1.png" alt="Cuivre">
-            <h4>Cuivre</h4>
-            <p>24€</p>
-          </div>
-
-          <div class="tarif-item" role="listitem">
-            <img src="https://i.ibb.co/Nn2m5nWx/Capture-decran-2025-08-02-021319-1.png" alt="Pierre">
-            <h4>Pierre</h4>
-            <p>24€</p>
-          </div>
-
-          <div class="tarif-item" role="listitem">
-            <img src="https://i.ibb.co/d4QKdd83/Capture-decran-2025-08-03-030813-1.png" alt="Or">
-            <h4>Or</h4>
-            <p>6€</p>
-          </div>
-
-          <div class="tarif-item" role="listitem">
-            <img src="https://i.ibb.co/wZdrtmbh/Capture-decran-2025-08-03-030419-1.png" alt="Diamant">
-            <h4>Diamant</h4>
-            <p>150€</p>
-          </div>
-        </div>
-
-        <div class="livraison">
-          <div class="box">
-            <img src="https://cdn-icons-png.flaticon.com/512/4554/4554842.png" alt="Livraison">
-            <h4 style="margin-top:.5rem;margin-bottom:.25rem">Livraison</h4>
-            <p style="margin:0">Tarif selon la distance entre 500€ et 1000€</p>
-          </div>
         </div>
       </div>
     </section>
@@ -362,32 +418,28 @@
 
         <div class="annonces-container" aria-live="polite">
           <div class="annonce" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400680302308757554/1400872556956745881'">
-            <img src="https://www.usinenouvelle.com/mediatheque/5/9/6/000759695_image_896x598/recrutement.jpg" alt="Annonce 1">
+            <img src="https://www.usinenouvelle.com/mediatheque/5/9/6/000759695_image_896x598/recrutement.jpg" alt="Annonce recrutement">
             <div class="annonce-content">
-              <h4>recrutement chez ProTerre</h4>
-              <p>nous avons de la place dans l équipe de direction de ProTerre mais aussi en tan que mineur dans la mine</p>
+              <h4>Recrutement chez Proterre</h4>
+              <p>Nous renforçons l’équipe de direction et recrutons des mineurs. Missions locales, ambiance familiale, matériel fourni.</p>
               <button class="btn">Voir</button>
             </div>
           </div>
 
           <div class="annonce" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400680245283131474/1400873022973280257'">
-            <img src="https://gowork.fr/blog/wp-content/uploads/sites/8/2022/09/placement_interim_saint_malo_0.jpeg" alt="Annonce 2">
+            <img src="https://gowork.fr/blog/wp-content/uploads/sites/8/2022/09/placement_interim_saint_malo_0.jpeg" alt="Annonce intérim">
             <div class="annonce-content">
-              <h4>💼 Devenez intérimaire chez Proterre !💼</h4>
-              <p>🔹 Comment ça marche ?
-1. Devenez intérimaire chez Proterre.  
-2. Participez à nos tours de mine.  
-3. Nous vous rachetons tous vos minerais
-plus d'infos sur notre radio D</p>
+              <h4>💼 Devenez intérimaire chez Proterre</h4>
+              <p>Inscrivez-vous en intérim, participez à nos tours de mine et nous rachetons tous vos minerais. Infos sur notre radio D.</p>
               <button class="btn">Voir</button>
             </div>
           </div>
 
           <div class="annonce" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400681239253618911'">
-            <img src="https://yago-talents-entrepreneurs.com/wp-content/uploads/2019/04/Partenaires.png" alt="Annonce 3">
+            <img src="https://yago-talents-entrepreneurs.com/wp-content/uploads/2019/04/Partenaires.png" alt="Annonce partenariat">
             <div class="annonce-content">
-              <h4>devenir partenaire</h4>
-              <p>apprêt avoir fait 1 commende vous pouvez devenir grâce a se statu vous pourrai bénéfice d une priorité dans les commande</p>
+              <h4>Devenir partenaire</h4>
+              <p>Après une première commande, passez partenaire et obtenez la priorité sur nos disponibilités. Contact via le bouton ci-dessous.</p>
               <button class="btn">Voir</button>
             </div>
           </div>
@@ -414,85 +466,41 @@ plus d'infos sur notre radio D</p>
         </div>
       </div>
     </section>
-
-    <!-- PARTENAIRES -->
-    <section id="partenaires">
-      <div class="wrap center" style="flex-direction:column;">
-        <h2>Nos partenaires</h2>
-        <div style="height:1rem;"></div>
-
-        <div class="part-list">
-          <div class="part-item">
-            <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-32590363.jpg" alt="Partenaire 1">
-            <h4 style="color:var(--violet);margin-top:.5rem">???</h4>
-            <p style="color:var(--violet-clair)">......</p>
-          </div>
-
-          <div class="part-item">
-            <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-32590363.jpg" alt="Partenaire 2">
-            <h4 style="color:var(--violet);margin-top:.5rem">???</h4>
-            <p style="color:var(--violet-clair)">......</p>
-          </div>
-
-          <div class="part-item">
-            <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-32590363.jpg" alt="Partenaire 3">
-            <h4 style="color:var(--violet);margin-top:.5rem">???</h4>
-            <p style="color:var(--violet-clair)">......</p>
-          </div>
-        </div>
-
-        <div style="margin-top:1.5rem">
-          <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400681239253618911'">Voir tous les partenaires</button>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer>
     <p>&copy; 2025 Proterre - Tous droits réservés</p>
   </footer>
 
-  <script>
-    // Burger menu toggle + close on link click (mobile friendly)
-    (function(){
-      const burger = document.getElementById('burger');
-      const navLinks = document.getElementById('nav-links');
-      burger.addEventListener('click', function(){
-        const isShown = navLinks.classList.toggle('show');
-        burger.setAttribute('aria-expanded', isShown ? 'true' : 'false');
-      });
+  <!-- MODALE FICHE MINERAI -->
+  <div class="modal-backdrop" id="fiche-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <button class="close-x" id="fiche-close" aria-label="Fermer la fiche">✕</button>
+      <div class="modal-img">
+        <img id="fiche-img" src="" alt="Photo du minerai sélectionné">
+      </div>
+      <div class="modal-body">
+        <h3 id="fiche-title">Minerai</h3>
+        <div class="meta" id="fiche-meta">Prix : — • Stock : —</div>
+        <div class="reserve">
+          <strong>Réservation possible :</strong> vous pouvez commander dès maintenant, <em>nous réserverons le lot pour vous</em>.
+        </div>
+        <p>
+          Extraction locale, traçabilité claire. Conditionnement à la demande selon vos besoins (vrac, big-bag, palette).
+        </p>
+        <div class="modal-actions">
+          <button class="order-button" id="fiche-order">Commander</button>
+          <button class="order-button" id="fiche-contact">Nous contacter</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      // Close mobile menu when clicking a link
-      Array.from(navLinks.querySelectorAll('a')).forEach(a=>{
-        a.addEventListener('click', ()=>{
-          if(navLinks.classList.contains('show')){
-            navLinks.classList.remove('show');
-            burger.setAttribute('aria-expanded','false');
-            window.scrollTo({top:0,behavior:'smooth'});
-          }
-        });
-      });
-
-      // Optional: close menu on resize to desktop
-      window.addEventListener('resize', ()=>{
-        if(window.innerWidth > 768 && navLinks.classList.contains('show')){
-          navLinks.classList.remove('show');
-          burger.setAttribute('aria-expanded','false');
-        }
-      });
-    })();
-  </script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+  <!-- POP-UP PUB PARTENAIRES -->
+  <div class="popup" id="partner-popup" aria-live="polite">
+    <header>
+      <h5>Annonce partenaire</h5>
+      <button class="popup-close" id="popup-close" aria-label="Fermer la publicité">✕</button>
+    </header>
+    <div class="popup-body">
+      <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-3259036
