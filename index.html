@@ -676,14 +676,14 @@
       // 1) Un popup dans les 10 premières secondes (ici à 1s pour être sûr)
       setTimeout(showPopup, 1000);
 
-      // 2) Puis réapparition régulière (toutes les ~22s)
+      // 2) Puis réapparition régulière (toutes les ~2min)
       setInterval(()=>{
         if(!showing) showPopup();
-      }, 22000);
+      }, 120000);
 
-      // 3) Après fermeture manuelle, réapparition un peu plus tôt (8s) pour insister
+      // 3) Après fermeture manuelle, réapparition un peu plus tôt (40s) pour insister
       close.addEventListener('click', ()=>{
-        setTimeout(()=>{ if(!showing) showPopup(); }, 8000);
+        setTimeout(()=>{ if(!showing) showPopup(); }, 40000);
       });
     })();
   </script>
