@@ -504,4 +504,188 @@
         </p>
 
         <div style="margin-top:1.5rem">
-          <butt
+          <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400683350246686770'">Postuler</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p style="text-align:center;">&copy; 2025 Proterre - Tous droits réservés</p>
+  </footer>
+
+  <!-- MODALE FICHE MINERAI -->
+  <div class="modal-backdrop" id="fiche-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <button class="close-x" id="fiche-close" aria-label="Fermer la fiche">✕</button>
+      <div class="modal-img">
+        <img id="fiche-img" src="" alt="Photo du minerai sélectionné">
+      </div>
+      <div class="modal-body">
+        <h3 id="fiche-title">Minerai</h3>
+        <div class="meta" id="fiche-meta">Prix : — • Stock : —</div>
+        <div class="reserve">
+          <strong>Réservation possible :</strong> vous pouvez commander dès maintenant, <em>nous réserverons le lot pour vous</em>.
+        </div>
+        <p>
+          Extraction locale, traçabilité claire. Conditionnement à la demande selon vos besoins (vrac, big-bag, palette).
+        </p>
+        <div class="modal-actions">
+          <button class="order-button" id="fiche-order">Commander</button>
+          <button class="order-button" id="fiche-contact">Nous contacter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POP-UP PUB PARTENAIRES (plus imposant, image fournie) -->
+  <div class="popup attention" id="partner-popup" aria-live="polite">
+    <header>
+      <h5>Annonce partenaire</h5>
+      <button class="popup-close" id="popup-close" aria-label="Fermer la publicité">✕</button>
+    </header>
+    <div class="popup-body">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1280px-Question_Mark.svg.png" alt="Place vacante - partenaire">
+      <div>
+        <p><strong>Place vacante</strong> — contactez-nous pour devenir partenaire.</p>
+        <p style="margin-top:.35rem;">Visibilité sur le site + priorité commerciale.</p>
+      </div>
+    </div>
+    <div class="popup-actions">
+      <a class="cta-link" id="popup-action" href="https://discord.com/channels/1392204625641340939/1400683350246686770">Contactez-moi</a>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Burger menu (mobile fiable) ----------
+    (function(){
+      const burger = document.getElementById('burger');
+      const navLinks = document.getElementById('nav-links');
+
+      function toggleMenu(){
+        const isOpen = navLinks.classList.toggle('open');
+        burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+      burger.addEventListener('click', toggleMenu);
+
+      // Fermer au clic sur un lien
+      navLinks.addEventListener('click', (e)=>{
+        if(e.target.tagName === 'A' && navLinks.classList.contains('open')){
+          navLinks.classList.remove('open');
+          burger.setAttribute('aria-expanded','false');
+        }
+      });
+
+      // Fermer si on resize vers desktop
+      window.addEventListener('resize', ()=>{
+        if(window.innerWidth > 768 && navLinks.classList.contains('open')){
+          navLinks.classList.remove('open');
+          burger.setAttribute('aria-expanded','false');
+        }
+      });
+    })();
+
+    // ---------- FICHE MINERAI (modale) ----------
+    (function(){
+      const grid = document.getElementById('minerals-grid');
+      const backdrop = document.getElementById('fiche-backdrop');
+      const closeBtn = document.getElementById('fiche-close');
+      const img = document.getElementById('fiche-img');
+      const title = document.getElementById('fiche-title');
+      const meta = document.getElementById('fiche-meta');
+      const orderBtn = document.getElementById('fiche-order');
+      const contactBtn = document.getElementById('fiche-contact');
+
+      const ORDER_LINK = 'https://discord.com/channels/1392204625641340939/1400683350246686770';
+
+      function openFiche(data){
+        img.src = data.img;
+        img.alt = data.name;
+        title.textContent = data.name;
+        meta.textContent = `Prix : ${data.price}€ • Stock : ${data.stock}`;
+        orderBtn.onclick = ()=> window.location.href = ORDER_LINK;
+        contactBtn.onclick = ()=> window.location.href = ORDER_LINK;
+        backdrop.style.display = 'flex';
+        backdrop.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeFiche(){
+        backdrop.style.display = 'none';
+        backdrop.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+
+      grid.addEventListener('click', (e)=>{
+        const item = e.target.closest('.tarif-item');
+        const seeBtn = e.target.closest('.voir-btn');
+        if(!item && !seeBtn) return;
+        const card = seeBtn ? seeBtn.closest('.tarif-item') : item;
+        const data = {
+          name: card.dataset.name,
+          price: card.dataset.price,
+          stock: card.dataset.stock,
+          img: card.dataset.img
+        };
+        openFiche(data);
+      });
+
+      // Accessibilité: ouvrir avec Entrée/Espace
+      grid.addEventListener('keydown', (e)=>{
+        if((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('tarif-item')){
+          e.preventDefault();
+          const card = e.target;
+          const data = {
+            name: card.dataset.name,
+            price: card.dataset.price,
+            stock: card.dataset.stock,
+            img: card.dataset.img
+          };
+          openFiche(data);
+        }
+      });
+
+      closeBtn.addEventListener('click', closeFiche);
+      backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) closeFiche(); });
+      window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFiche(); });
+    })();
+
+    // ---------- POP-UPS PARTENAIRES (imposants + 1 dans les 10 premières secondes) ----------
+    (function(){
+      const popup = document.getElementById('partner-popup');
+      const close = document.getElementById('popup-close');
+
+      let showing = false;
+
+      function showPopup(){
+        if(showing) return;
+        showing = true;
+        popup.style.display = 'block';
+        popup.classList.add('attention');
+        // auto-fermeture après 15s si l'utilisateur ne ferme pas
+        setTimeout(()=>{ if(showing) hidePopup(); }, 15000);
+      }
+      function hidePopup(){
+        popup.style.display = 'none';
+        showing = false;
+        popup.classList.remove('attention');
+      }
+
+      close.addEventListener('click', hidePopup);
+
+      // 1) Un popup dans les 10 premières secondes (ici à 1s pour être sûr)
+      setTimeout(showPopup, 1000);
+
+      // 2) Puis réapparition régulière (toutes les ~22s)
+      setInterval(()=>{
+        if(!showing) showPopup();
+      }, 22000);
+
+      // 3) Après fermeture manuelle, réapparition un peu plus tôt (8s) pour insister
+      close.addEventListener('click', ()=>{
+        setTimeout(()=>{ if(!showing) showPopup(); }, 8000);
+      });
+    })();
+  </script>
+</body>
+</html>
