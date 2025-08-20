@@ -80,8 +80,8 @@
       transition:transform .2s, opacity .2s;
     }
 
-    /* HEADER */
-    header{
+    /* HERO HEADER (#accueil) — scoping pour éviter d'impacter le header du popup */
+    #accueil{
       margin-top:var(--nav-height);
       min-height:72vh;
       height:calc(100vh - var(--nav-height));
@@ -91,14 +91,15 @@
       position:relative;
       text-align:center;
     }
-    header::before{
+    #accueil::before{
       content:"";
       position:absolute;inset:0;background:linear-gradient(180deg, rgba(43,9,84,0.55), rgba(62,11,117,0.35));
       z-index:0;
+      pointer-events:none; /* s'assure de ne pas bloquer les clics */
     }
-    .header-content{position:relative;z-index:1;color:var(--jaune);padding:1rem}
-    .header-content h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:1px;margin-bottom:.5rem;text-align:center}
-    .header-content p{color:var(--jaune-pale);font-size:clamp(1rem,2.2vw,1.25rem);text-align:center}
+    #accueil .header-content{position:relative;z-index:1;color:var(--jaune);padding:1rem}
+    #accueil .header-content h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:1px;margin-bottom:.5rem;text-align:center}
+    #accueil .header-content p{color:var(--jaune-pale);font-size:clamp(1rem,2.2vw,1.25rem);text-align:center}
 
     /* MAIN / Sections */
     main{overflow-x:hidden}
@@ -248,9 +249,13 @@
     @keyframes popIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
     @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
     .popup header{
-      margin:0;height:auto;background:linear-gradient(90deg,var(--violet),var(--violet-clair));
+      /* On redéfinit explicitement pour ne pas hériter du header héro */
+      position:relative;
+      margin:0;height:auto;min-height:0;
+      background:linear-gradient(90deg,var(--violet),var(--violet-clair));
       color:#fff;display:flex;align-items:center;gap:.5rem;justify-content:space-between;padding:.75rem .9rem;
     }
+    .popup header::before{content:none;}
     .popup header h5{font-size:1.05rem}
     .popup .popup-close{
       background:rgba(255,255,255,.95);color:var(--violet);border:none;border-radius:10px;padding:.25rem .55rem;cursor:pointer;font-weight:900;font-size:1rem;
@@ -300,7 +305,8 @@
     @media (max-width:768px){
       :root{--nav-height:56px}
       nav{height:var(--nav-height);padding:0 .75rem}
-      header{height:calc(70vh - var(--nav-height));min-height:340px;margin-top:var(--nav-height)}
+      /* ancien sélecteur header remplacé par #accueil */
+      #accueil{height:calc(70vh - var(--nav-height));min-height:340px;margin-top:var(--nav-height)}
       .burger{display:flex;z-index:1301}
       /* mobile: menu masqué par défaut, visible quand .open */
       .nav-links{
@@ -314,8 +320,8 @@
     }
 
     @media (max-width:420px){
-      .header-content h1{font-size:1.6rem}
-      .header-content p{font-size:1rem}
+      #accueil .header-content h1{font-size:1.6rem}
+      #accueil .header-content p{font-size:1rem}
       .annonce{width:100%}
     }
   </style>
@@ -342,7 +348,7 @@
     </button>
   </nav>
 
-  <!-- HEADER -->
+  <!-- HERO HEADER -->
   <header id="accueil">
     <!-- Plume d’entrée insistante -->
     <img class="plume" src="https://i.ibb.co/cc2hyN45/1000029864-removebg-preview.png" alt="Plume décorative">
@@ -542,10 +548,10 @@
   <div class="popup attention" id="partner-popup" aria-live="polite">
     <header>
       <h5>Annonce partenaire</h5>
-      <button class="popup-close" id="popup-close" aria-label="Fermer la publicité">✕</button>
+      <button class="popup-close" id="popup-close" aria-label="Fermer la publicité" type="button">✕</button>
     </header>
     <div class="popup-body">
-      <img src="https://i.ibb.co/Dfz31v1r/Chat-GPT-Image-1-aout-2025-18-00-26-1.png">
+      <img src="https://i.ibb.co/Dfz31v1r/Chat-GPT-Image-1-aout-2025-18-00-26-1.png" alt="Logo partenaire">
       <div>
         <p><strong>Place vacante</strong> — contactez-nous pour devenir partenaire.</p>
         <p style="margin-top:.35rem;">Visibilité sur le site + priorité commerciale.</p>
@@ -653,7 +659,9 @@
     // ---------- POP-UPS PARTENAIRES (imposants + 1 dans les 10 premières secondes) ----------
     (function(){
       const popup = document.getElementById('partner-popup');
-      const close = document.getElementById('popup-close');
+      const popupCloseBtn = document.getElementById('popup-close');
+
+      if(!popup || !popupCloseBtn) return;
 
       let showing = false;
 
@@ -671,20 +679,29 @@
         popup.classList.remove('attention');
       }
 
-      close.addEventListener('click', hidePopup);
+      popupCloseBtn.addEventListener('click', hidePopup);
 
       // 1) Un popup dans les 10 premières secondes (ici à 1s pour être sûr)
       setTimeout(showPopup, 1000);
 
       // 2) Puis réapparition régulière (toutes les ~2min)
-      setInterval(()=>{
+      const cycle = setInterval(()=>{
         if(!showing) showPopup();
       }, 120000);
 
       // 3) Après fermeture manuelle, réapparition un peu plus tôt (40s) pour insister
-      close.addEventListener('click', ()=>{
+      popupCloseBtn.addEventListener('click', ()=>{
         setTimeout(()=>{ if(!showing) showPopup(); }, 40000);
       });
+
+      // Nettoyage si jamais le noeud disparaît (robustesse)
+      const obs = new MutationObserver(()=>{
+        if(!document.body.contains(popup)){
+          clearInterval(cycle);
+          obs.disconnect();
+        }
+      });
+      obs.observe(document.body, {childList:true, subtree:true});
     })();
   </script>
 </body>
