@@ -662,8 +662,8 @@
         showing = true;
         popup.style.display = 'block';
         popup.classList.add('attention');
-        // auto-fermeture après 15s si l'utilisateur ne ferme pas
-        setTimeout(()=>{ if(showing) hidePopup(); }, 15000);
+        // auto-fermeture après 5s si l'utilisateur ne ferme pas
+        setTimeout(()=>{ if(showing) hidePopup(); }, 5000);
       }
       function hidePopup(){
         popup.style.display = 'none';
