@@ -44,13 +44,9 @@
       z-index:1200;
       gap:1rem;
     }
-
-    .nav-left{
-      display:flex;align-items:center;gap:0.75rem;
-    }
+    .nav-left{display:flex;align-items:center;gap:0.75rem;}
     .nav-logo{height:44px; width:auto}
-
-    .nav-title{font-weight:700;color:var(--jaune);font-size:1rem}
+    .nav-title{font-weight:700;color:var(--jaune);font-size:1rem;text-align:center}
 
     .nav-links{
       display:flex;gap:1rem;align-items:center;
@@ -61,6 +57,7 @@
       padding:0.35rem 0.5rem;
       border-radius:6px;
       transition:opacity .18s, background .18s;
+      text-align:center;
     }
     .nav-links a:hover{opacity:.85}
 
@@ -71,6 +68,8 @@
       border-radius:8px;
       align-items:center;justify-content:center;
       cursor:pointer;
+      border:2px solid rgba(255,255,255,.35);
+      background:transparent;
     }
     .burger-inner{
       width:22px;
@@ -90,21 +89,23 @@
       background-size:cover;background-position:center;
       display:flex;align-items:center;justify-content:center;
       position:relative;
+      text-align:center;
     }
     header::before{
       content:"";
       position:absolute;inset:0;background:linear-gradient(180deg, rgba(43,9,84,0.55), rgba(62,11,117,0.35));
       z-index:0;
     }
-    .header-content{position:relative;z-index:1;text-align:center;color:var(--jaune);padding:1rem}
-    .header-content h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:1px;margin-bottom:.5rem}
-    .header-content p{color:var(--jaune-pale);font-size:clamp(1rem,2.2vw,1.25rem)}
+    .header-content{position:relative;z-index:1;color:var(--jaune);padding:1rem}
+    .header-content h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:1px;margin-bottom:.5rem;text-align:center}
+    .header-content p{color:var(--jaune-pale);font-size:clamp(1rem,2.2vw,1.25rem);text-align:center}
 
     /* MAIN / Sections */
     main{overflow-x:hidden}
     section{
       padding:3.5rem 1rem;
       width:100%;
+      text-align:center; /* centrer titres + contenu par défaut */
     }
     section:nth-of-type(even){background:var(--jaune-pale)}
     section:nth-of-type(odd){background:var(--violet-pale)}
@@ -119,9 +120,10 @@
       margin-bottom:1.5rem;
       font-size:1.25rem;
       box-shadow: var(--shadow);
+      text-align:center;
     }
 
-    /* TARIFS (fusion avec stock au survol) */
+    /* TARIFS (avec stock au survol) */
     .tarif-container{
       display:flex;
       flex-wrap:wrap;
@@ -155,26 +157,29 @@
     .tarif-item .hover-overlay{
       position:absolute;inset:0;
       display:flex;flex-direction:column;align-items:center;justify-content:center;
-      background:rgba(43,9,84,.85);
+      background:rgba(43,9,84,.88);
       color:#fff;
       opacity:0;pointer-events:none;
       transition:opacity .18s;
-      padding:1rem;gap:.5rem;
+      padding:1rem;gap:.6rem;
+      text-align:center;
     }
     .tarif-item .stock-line{font-weight:800}
     .tarif-item .voir-btn{
       background:var(--jaune);color:var(--violet);
-      padding:.5rem .9rem;border-radius:8px;border:none;font-weight:800;cursor:pointer;
+      padding:.55rem 1rem;border-radius:10px;border:none;font-weight:800;cursor:pointer;
       box-shadow: var(--shadow);
     }
-    .tarif-item:hover{transform:scale(1.04); box-shadow:var(--shadow); border-color:#432179;}
-    .tarif-item:hover img{transform:scale(1.05)}
+    .tarif-item:hover{transform:scale(1.06); box-shadow:var(--shadow); border-color:#432179;}
+    .tarif-item:hover img{transform:scale(1.07)}
     .tarif-item:hover .hover-overlay{opacity:1;pointer-events:auto}
 
     .order-button{
-      margin-top:2rem;background:var(--jaune);color:var(--violet);
-      padding:.75rem 1.25rem;border-radius:10px;border:none;font-weight:800;cursor:pointer;
+      margin:1.25rem auto 0 auto;
+      background:var(--jaune);color:var(--violet);
+      padding:.85rem 1.35rem;border-radius:12px;border:none;font-weight:800;cursor:pointer;
       box-shadow: var(--shadow);
+      display:inline-block;
     }
     .order-button:hover{background:#ffd777}
 
@@ -184,8 +189,9 @@
     .livraison .box{
       border:2px solid #000;background:#fff;padding:1rem;border-radius:12px;max-width:520px;text-align:center;
       box-shadow: var(--shadow);
+      margin:0 auto;
     }
-    .livraison img{max-width:50px}
+    .livraison img{max-width:50px;margin:0 auto}
 
     /* ANNONCES */
     .annonces-container{
@@ -195,6 +201,7 @@
       width:300px;background:#fff;border:2px solid var(--violet);border-radius:14px;overflow:hidden;position:relative;cursor:pointer;
       transition:transform .18s;
       box-shadow: var(--shadow);
+      text-align:left;
     }
     .annonce:hover{transform:translateY(-4px)}
     .annonce img{width:100%;height:160px;object-fit:cover}
@@ -212,13 +219,15 @@
     .modal{
       width:100%;max-width:860px;background:#fff;border-radius:16px;overflow:hidden;border:2px solid var(--violet);box-shadow: var(--shadow);
       display:grid;grid-template-columns: 1.1fr 1fr;gap:0;
+      text-align:left;
+      position:relative;
     }
     .modal-img{
       background:#faf7ff;display:flex;align-items:center;justify-content:center;padding:1rem;border-right:2px solid var(--violet);
     }
     .modal-img img{max-height:340px;object-fit:contain;border-radius:10px}
     .modal-body{padding:1.25rem}
-    .modal-body h3{margin-bottom:.35rem}
+    .modal-body h3{margin-bottom:.35rem;text-align:left}
     .modal-body .meta{color:var(--violet-clair);margin-bottom:.75rem;font-weight:700}
     .modal-body .reserve{
       background:var(--violet-pale);border-left:4px solid var(--violet);padding:.75rem;border-radius:10px;margin:.75rem 0;
@@ -229,7 +238,7 @@
       box-shadow: var(--shadow);
     }
 
-    /* POP-UP PUB PARTENAIRES */
+    /* POP-UP PUB PARTENAIRES (plus insistants) */
     .popup{
       position:fixed;bottom:20px;right:20px;z-index:1500;display:none;
       background:#fff;border:2px solid var(--violet);border-radius:16px;box-shadow: var(--shadow);
@@ -237,6 +246,7 @@
       animation: popIn .28s ease-out;
     }
     @keyframes popIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+    @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
     .popup header{
       margin:0;height:auto;background:linear-gradient(90deg,var(--violet),var(--violet-clair));
       color:#fff;display:flex;align-items:center;gap:.5rem;justify-content:space-between;padding:.6rem .75rem;
@@ -250,9 +260,10 @@
     .popup .popup-body p{font-size:.95rem;color:var(--violet-clair)}
     .popup .popup-actions{padding:.8rem;padding-top:0}
     .popup .popup-actions .order-button{margin:0;width:100%}
+    .popup.attention{animation: nudge 0.9s ease-in-out 2 0.6s;}
 
-    /* FOOTER */
-    footer{padding:1.25rem;background:#fff;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:var(--violet)}
+    /* Utilities */
+    .center{display:flex;justify-content:center;align-items:center}
 
     /* ---------------- Responsive ---------------- */
     @media (max-width:1024px){
@@ -265,11 +276,14 @@
       :root{--nav-height:56px}
       nav{height:var(--nav-height);padding:0 .75rem}
       header{height:calc(70vh - var(--nav-height));min-height:340px;margin-top:var(--nav-height)}
-      .burger{display:flex}
-      .nav-links{position:fixed;top:var(--nav-height);left:0;right:0;background:var(--violet);flex-direction:column;padding:1rem;gap:.5rem;display:none;z-index:1300}
+      .burger{display:flex;z-index:1301}
+      /* mobile: menu masqué par défaut, visible quand .open */
+      .nav-links{
+        position:fixed;top:var(--nav-height);left:0;right:0;background:var(--violet);
+        flex-direction:column;padding:1rem;gap:.5rem;display:none;z-index:1300
+      }
       .nav-links a{padding:.6rem .75rem;border-radius:6px}
-      .nav-links.show{display:flex}
-
+      .nav-links.open{display:flex}
       .tarif-container,.annonces-container{flex-direction:column;align-items:center}
       .tarif-item,.annonce{width:92%;max-width:520px}
     }
@@ -278,6 +292,26 @@
       .header-content h1{font-size:1.6rem}
       .header-content p{font-size:1rem}
       .annonce{width:100%}
+    }
+
+    /* ---- Plume d'entrée (plus insistante) ---- */
+    .plume{
+      position:fixed;
+      top:8%;
+      left:6%;
+      width:72px;
+      opacity:.0;
+      transform:translateY(-20px) scale(.95);
+      animation: plumeIn 1.2s ease-out forwards .35s, plumeFloat 5s ease-in-out infinite 1.7s;
+      z-index:1100;
+      pointer-events:none;
+    }
+    @keyframes plumeIn{
+      to{opacity:1; transform:translateY(0) scale(1)}
+    }
+    @keyframes plumeFloat{
+      0%,100%{ transform: translateY(0) }
+      50%{ transform: translateY(-8px) }
     }
   </style>
 </head>
@@ -289,14 +323,14 @@
       <div class="nav-title">Proterre</div>
     </div>
 
-    <div class="nav-links" id="nav-links">
+    <div class="nav-links" id="nav-links" aria-label="Menu">
       <a href="#accueil">Accueil</a>
       <a href="#tarifs">Tarifs</a>
       <a href="#annonces">Annonces</a>
       <a href="#recrutement">Recrutement</a>
     </div>
 
-    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
       <span class="burger-inner" aria-hidden="true">
         <span></span><span></span><span></span>
       </span>
@@ -305,9 +339,13 @@
 
   <!-- HEADER -->
   <header id="accueil">
+    <img class="plume" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Feather.svg/240px-Feather.svg.png" alt="Plume décorative">
     <div class="header-content">
       <h1>Proterre</h1>
       <p>Excavation locale • Minage à l’ancienne • Magnétite, cuivre, pierre</p>
+      <div style="margin-top:1.25rem">
+        <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400683350246686770'">Commander</button>
+      </div>
     </div>
   </header>
 
@@ -463,44 +501,3 @@
 
         <div style="margin-top:1.5rem">
           <button class="order-button" onclick="window.location.href='https://discord.com/channels/1392204625641340939/1400683350246686770'">Postuler</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Proterre - Tous droits réservés</p>
-  </footer>
-
-  <!-- MODALE FICHE MINERAI -->
-  <div class="modal-backdrop" id="fiche-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal" role="document">
-      <button class="close-x" id="fiche-close" aria-label="Fermer la fiche">✕</button>
-      <div class="modal-img">
-        <img id="fiche-img" src="" alt="Photo du minerai sélectionné">
-      </div>
-      <div class="modal-body">
-        <h3 id="fiche-title">Minerai</h3>
-        <div class="meta" id="fiche-meta">Prix : — • Stock : —</div>
-        <div class="reserve">
-          <strong>Réservation possible :</strong> vous pouvez commander dès maintenant, <em>nous réserverons le lot pour vous</em>.
-        </div>
-        <p>
-          Extraction locale, traçabilité claire. Conditionnement à la demande selon vos besoins (vrac, big-bag, palette).
-        </p>
-        <div class="modal-actions">
-          <button class="order-button" id="fiche-order">Commander</button>
-          <button class="order-button" id="fiche-contact">Nous contacter</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- POP-UP PUB PARTENAIRES -->
-  <div class="popup" id="partner-popup" aria-live="polite">
-    <header>
-      <h5>Annonce partenaire</h5>
-      <button class="popup-close" id="popup-close" aria-label="Fermer la publicité">✕</button>
-    </header>
-    <div class="popup-body">
-      <img src="https://thumbs.dreamstime.com/b/question-mark-confusion-d-people-man-person-3259036
